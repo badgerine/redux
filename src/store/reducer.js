@@ -1,9 +1,11 @@
+import React from 'react';
+
 const initialState = {
     counter: 0
-}
+};
 
-const reducer = (state = initialState, action) =>  (
-    state
-)
+const reducer = (state= initialState, action) =>  {
+    return state;
+}
 
 export default reducer ;
