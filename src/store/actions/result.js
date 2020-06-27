@@ -25,7 +25,7 @@ const fetchSauce = () => {
 }
 
 const asyncStoreResult = (value) => {
-    return thunkDispatch => {
+    return (thunkDispatch, getState) => {
 
         // setTimeout(() => {
         //     console.log("timeout done...")
@@ -41,6 +41,8 @@ const asyncStoreResult = (value) => {
             console.error('error: ' + rejection);
         });
 
+        console.log('[store.result - getState()]');
+        console.log(getState().counter.counter);//counter from store as called from props in Counter.js
         thunkDispatch(syncronousStoreResult(value));
     };
 }
