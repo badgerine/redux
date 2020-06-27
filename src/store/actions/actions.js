@@ -19,7 +19,7 @@ export const decrement = () => {
 
 export const add = (amount) => {
     return {
-        type: ADD, 
+        type: ADD,
         value: amount
     }
 };
@@ -31,11 +31,42 @@ export const subtract = (amount) => {
     }
 };
 
-export const storeResult = (value) => {
+export const syncronousStoreResult = (value) => {
     return {
         type: STORE_RESULT,
         result: value
     }
+}
+
+const fetchSauce = () => {
+    const response = fetch("https://cors-anywhere.herokuapp.com/https://www.google.com/search?q=secret+sauce");
+    console.log(response);
+    return response;
+}
+
+export const asyncStoreResult = (value) => {
+    return thunkDispatch => {
+
+        // setTimeout(() => {
+        //     console.log("timeout done...")
+        //     thunkDispatch(syncronousStoreResult(value));
+        // }, 4000);
+
+        fetchSauce().then(response => {
+            const reader = response.body.getReader().read()
+                .then(result => {
+                    console.log(new TextDecoder("utf-8").decode(result.value));
+                });
+        }).catch(rejection => {
+            console.error('error: ' + rejection);
+        });
+
+        thunkDispatch(syncronousStoreResult(value));
+    };
+}
+
+export const storeResult = (value) => {
+    return asyncStoreResult(value);
 };
 
 export const deleteResult = (value) => {
