@@ -13,11 +13,7 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_RESULT:
             const updatedResults = state.results.filter(result => (result.id !== action.resultId));
-            return {
-                ...state,
-                results: updatedResults
-
-            }
+            return updateObject(state, {results: updatedResults});
     }
     return state;
 };
